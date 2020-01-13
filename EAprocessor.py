@@ -2,10 +2,12 @@
 ## EA data processor (Python 2.7)
 ## Function: EA Data Processor: Renames columns and does phase correction
 ## Author: Seah Zong Long
-## Version: 0.0.0
+## Version: 0.0.1
 ## Last modified: 13/01/2020
 
-## Changelog: 0.0.0 Created
+## Changelog: 
+## 0.0.0 Created
+## 0.0.1 pandas-iefy
 
 ## Instructions:
 ## Similar to pytest. Open and select file dir that contains EA files
@@ -19,6 +21,7 @@ import numpy as np
 import matplotlib.pyplot as plt  
 import Tkinter
 import tkFileDialog
+import pandas as pd
 
 
 root = Tkinter.Tk()
@@ -40,17 +43,16 @@ wlist=[]
 for filename in (filelist):
     if 'Vdc' in filename:
         wlist.append(filename)
+        
+#   
+for filename in wlist:
 
-for file in wlist:
-
-    if os.path.exists('processed/%s' %file)!=True:
-        os.mkdir('processed/%s' %file)
-
-    w = Workbook()  ## creates workbook
-
-    count = 0
-    position = [0 for x in range (0,20)]
-    
-    f=open('%s' %file)      ## opens text file as f
-#    print 'Processing %s' %file
+    f=open('%s' %filename)      ## opens text file as f
     lines = f.readlines()       ## reads all lines
+    split_lines = []
+    for line in lines:
+        split_line = [float(i) for i in line.split()]
+        split_lines.append(split_line)
+    df = pd.DataFrame.from_records(split_lines,columns=['Photon Energy (eV)','Vdc','Vpd','Vpd_SD','Ch1','Ch1_SD','Ch2','Ch2_SD','Ch1/Vpd','Ch2/Vpd','%s' %filename,'Ch2p','m'])
+    
+    
