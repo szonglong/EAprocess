@@ -2,8 +2,8 @@
 ## EA data processor (Python 2.7)
 ## Function: EA Data Processor: Renames columns and does phase correction
 ## Author: Seah Zong Long
-## Version: 1.0.1
-## Last modified: 13/01/2020
+## Version: 1.2
+## Last modified: 22/02/2020
 
 ## Changelog: 
 ## 0.0.0 Created
@@ -12,6 +12,7 @@
 ## 0.1.1 Make into plot
 ## 1.0.0 Export processed plots
 ## 1.1.1 Export with plots and excel
+## 1.2 Export excel with big_plot_array
 
 ## Instructions:
 ## Similar to pytest. Open and select file dir that contains EA files
@@ -111,6 +112,7 @@ big_plot.savefig('processed/bigplot.png')
 
 df2 = pd.DataFrame(SSR_list, columns = ['Voltage','Phase'])
 df2.to_excel(writer, sheet_name = 'SSR')
+big_plot_array.to_excel(writer, sheet_name = 'bigplot')
 
 plt.close()
 writer.save()
